@@ -1,0 +1,22 @@
+
+*{
+    /* margin: 10px; */
+    overflow: auto;
+
+}
+body{
+
+    /* width: 5000px; */
+    /* height: 5000px; */
+    overflow: auto;
+}
+
+#box1{
+
+    width: 4500px;
+    height: 2200px;
+    background-color: burlywood;
+    position: relative;
+    zoom: 20%;
+    
+}
