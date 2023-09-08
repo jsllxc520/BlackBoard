@@ -1,22 +1,571 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
+<meta charset="utf-8">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Module</title>
-    <link rel="text/javascript" href="comfunction.js">
-    <!-- <link rel="apple-touch-icon" href="favicon.png"> -->
+    <meta charset="utf-8">
+    <title>iWhiteboard</title>
+
+    <script type="text/javascript"  src="event.js" ></script>
+
+    <script>
+
+        var mLand; 
+        var ViewZoom = 100;
+
+        // mLand.addEventListener("keydown", svgKeydow(event));
+
+        // function svgKeydow(event){
+
+        //     var zoom = document.getElementById('zoom');
+        //     zoom.value = event.keycode;
+        //     document.write(event.keycode);
+
+        // } 
+
+        document.addEventListener('keydown', svgkeydown, false);
+        
+        document.onkeydown = function(event){
+
+            var key = event.keyCode;
+            // var curZoom = mLand.style.zoom;
+            var obj = document.getElementById('Msvg');
+            var zoom = obj.style.zoom;
+
+            var len = obj.style.zoom.indexOf('%');
+
+            var zm = Number(obj.style.zoom.slice(0, len ));
+
+            var zmP = zm + zm / 15;
+            var zmM = zm - zm / 15;
+
+            // var ViewZoomCur = ViewZoom + "%"
+
+            switch (key){
+                case 90:
+                    // ViewZoom = ViewZoom + ViewZoom/10;
+                    mLand.style.zoom = String(zmP + "%");
+                    break;
+                case 88:
+                    // ViewZoom = ViewZoom - ViewZoom/10;
+                    mLand.style.zoom = String(zmM + "%");
+                    break;
+
+            }
+        }
+
+        window.onload = function(){
+
+
+            // Namespace constants
+            var svgns = "http://www.w3.org/2000/svg",
+                xlinkns = "http://www.w3.org/1999/xlink",
+                xmlns = "http://www.w3.org/XML/1998/namespace",
+                xmlnsns = "http://www.w3.org/2000/xmlns/", // see http://www.w3.org/TR/REC-xml-names/#xmlReserved
+                se_ns = "http://svg-edit.googlecode.com",
+                htmlns = "http://www.w3.org/1999/xhtml",
+                mathns = "http://www.w3.org/1998/Math/MathML";
+
+            // 获取已确定的绘图对像
+            mLand = document.getElementById('Msvg'); 
+            mLand.style.zoom = String(ViewZoom + "%")
+
+            
+
+            // 定义相关的物理尺寸  （单位mm）
+            var phyWidth = 4098.9;  // PCBA 总长度
+            var phyHeight = 1195.6  // 上下PCBA的距离 
+            var phyLedCenterDis = 1193;   // PCBA 上下灯中心距离
+            var LedWidth = 3;
+
+            // console.log(LedWidth);
+
+            // 定义显示区域4个坐标
+            var pointPhy = {topX1:0, topY1:0, topX2:0, topY2:0, bottomX1:0, bottomY1:0, bottomX2:0, bottomY2:0};
+
+            var viewWidth = mLand.scrollWidth;      // 显示区域的长度
+            var viewHeight = mLand.scrollHeight;    // 显示区域高度
+
+            // document.write(viewWidth);
+            // document.write(viewHeight);
+
+            // 计算显示区域的坐标
+            pointPhy.topX1 = (viewWidth -phyWidth)/2;
+            pointPhy.topY1 = (viewHeight -phyLedCenterDis)/2;
+            pointPhy.topX2 = pointPhy.topX1 + phyWidth;
+            pointPhy.topY2 = pointPhy.topY1;
+
+            pointPhy.bottomX1 = pointPhy.topX1;
+            pointPhy.bottomY1 = pointPhy.topY1 + phyLedCenterDis;
+            pointPhy.bottomX2 = pointPhy.topX2;
+            pointPhy.bottomY2 = pointPhy.bottomY1;
+
+            // 绘制上下灯的区域
+            var LineRs = document.createElementNS(svgns,'line');
+            LineRs.setAttribute('style', 'stroke:black; stroke-width:1; stroke-dasharray: 2 2'); 
+            LineRs.setAttribute('x1', pointPhy.topX1);
+            LineRs.setAttribute('y1', pointPhy.topY1 + 28);
+            LineRs.setAttribute('x2', pointPhy.topX2);
+            LineRs.setAttribute('y2', pointPhy.topY2 + 28);
+            mLand.appendChild(LineRs);
+
+            var LineTs = document.createElementNS(svgns,'line');
+            LineTs.setAttribute('style', 'stroke:black; stroke-width:1; stroke-dasharray: 2 2'); 
+            LineTs.setAttribute('x1', pointPhy.bottomX1);
+            LineTs.setAttribute('y1', pointPhy.bottomY1 - 28);
+            LineTs.setAttribute('x2', pointPhy.bottomX2);
+            LineTs.setAttribute('y2', pointPhy.bottomY2 - 28);
+            mLand.appendChild(LineTs);
+
+            // 每块PCBA的信息
+            var PCBA_01 = {
+                length:513.05,
+                led:60,
+                startPoint:0,
+                ptLed: new Array,
+                viewLed: new Array,
+
+            }
+            var PCBA_02 = {
+                length:535.95,
+                led:54,
+                startPoint:513.05,
+                ptLed: new Array,
+                viewLed: new Array,
+
+            }
+            var PCBA_03 = {
+                length:343.85,
+                led:45,
+                startPoint:513.05 + 535.95 + 11.2,
+                ptLed: new Array,
+                viewLed: new Array,
+
+            }
+            var PCBA_04 = {
+                length:540,
+                led:54,
+                startPoint:513.05 + 535.95 + 11.2 + 343.85,
+                ptLed: new Array,
+                viewLed: new Array,
+
+            }  
+            var PCBA_05 = {
+                length:540,
+                led:54,
+                startPoint:513.05 + 535.95 + 11.2 + 343.85 + 540,
+                ptLed: new Array,
+                viewLed: new Array,
+
+            }
+            var PCBA_06 = {
+                length:554.65,
+                led:63,
+                startPoint:513.05 + 535.95 + 11.2 + 343.85 + 540 + 540,
+                ptLed: new Array,
+                viewLed: new Array,
+
+            }
+            var PCBA_07 = {
+                length:493.15,
+                led:51,
+                startPoint:513.05 + 535.95 + 11.2 + 343.85 + 540 + 540 + 554.65 + 11.2,
+                ptLed: new Array,
+                viewLed: new Array,
+
+            }
+            var PCBA_08 = {
+                length:555.85,
+                led:63,
+                startPoint:513.05 + 535.95 + 11.2 + 343.85 + 540 + 540 + 554.65 + 11.2 + 493.15,
+                ptLed: new Array,
+                viewLed: new Array,
+
+            }
+
+            var InfPCBA = new Array();
+            var InfPoint = new Array();
+
+            // 三个分区信息
+            var area_c = {
+                piont: new Array,
+                led:0,
+                line:new Array,
+
+            }
+            var area_l = {
+                piont: new Array,
+                led:0,
+                line:new Array,
+            }
+            var area_r = {
+                piont: new Array,
+                led:0,
+                line:new Array,
+            }
+
+            var InfArea = new Array();
+
+            InfArea.push(area_l);
+            InfArea.push(area_c);
+            InfArea.push(area_r);
+
+            // push information to array
+            InfPCBA.push(PCBA_01);  
+            InfPCBA.push(PCBA_02);  
+            InfPCBA.push(PCBA_03);  
+            InfPCBA.push(PCBA_04);  
+            InfPCBA.push(PCBA_05);  
+            InfPCBA.push(PCBA_06);  
+            InfPCBA.push(PCBA_07);  
+            InfPCBA.push(PCBA_08);  
+
+            // 设计显示偏移
+            var offsetX = pointPhy.topX1;
+            var offsetY = pointPhy.topY1;
+
+            // 各PCBA位置信息
+            for(var i = 0; i < InfPCBA.length; i ++){
+                //
+                var Inf = InfPCBA[i];
+                var PCBA_TX = document.createElementNS(svgns,'line');
+                PCBA_TX.setAttribute('style', 'stroke:black; stroke-width:1'); 
+                if(i % 2)PCBA_TX.setAttribute('style', 'stroke:red; stroke-width:1'); 
+                PCBA_TX.setAttribute('x1', Inf.startPoint + offsetX);
+                PCBA_TX.setAttribute('y1', pointPhy.bottomY1 - 8);
+                PCBA_TX.setAttribute('x2', Inf.startPoint + Inf.length + offsetX);
+                PCBA_TX.setAttribute('y2', pointPhy.bottomY2 - 8);
+                mLand.appendChild(PCBA_TX);   
+                //
+                var PCBA_RX = document.createElementNS(svgns,'line');
+                PCBA_RX.setAttribute('style', 'stroke:black; stroke-width:1'); 
+                if(i % 2)PCBA_RX.setAttribute('style', 'stroke:red; stroke-width:1'); 
+                PCBA_RX.setAttribute('x1', Inf.startPoint + offsetX);
+                PCBA_RX.setAttribute('y1', pointPhy.topY1 + 8);
+                PCBA_RX.setAttribute('x2', Inf.startPoint + Inf.length + offsetX);
+                PCBA_RX.setAttribute('y2', pointPhy.topY1 + 8);
+                mLand.appendChild(PCBA_RX); 
+
+                // LED位置信息
+                var Inf = InfPCBA[i];
+                for(var j = 0; j < Inf.led; j ++){
+
+                    // var area 
+
+                    switch(i){
+
+                        case 0:
+                            if(j < 4){
+                                Inf.ptLed[j] = Inf.startPoint + LedWidth/2 + j * 3;
+                            }else{
+                                Inf.ptLed[j] = Inf.ptLed[j - 1] + (Inf.length - Inf.ptLed[3] - LedWidth/2) / (Inf.led - 4);
+                            }
+
+                            break;
+
+                        case 1:
+                            if(j < 1){
+                                Inf.ptLed[j] = Inf.startPoint + LedWidth/2 + j * 3;
+                            } else if(j > Inf.led - 4){
+                                Inf.ptLed[j] = Inf.ptLed[j - 1] + 3;
+                            }
+                            else{
+                                Inf.ptLed[j] = Inf.ptLed[j - 1] + (Inf.length - LedWidth/2 - 3 * 4) / (Inf.led - 4);
+                            }
+
+                            break;
+
+                        case 2:  
+                            if(j < 4){
+                                Inf.ptLed[j] = Inf.startPoint + LedWidth/2 + j * 3;
+                            }else{
+                                Inf.ptLed[j] = Inf.ptLed[j - 1] + (Inf.length - 4*3 - LedWidth/2) / (Inf.led - 4);    
+                            }                   
+                            break;
+
+                        case 3:
+                            if(j < 1){
+                                Inf.ptLed[j] = Inf.startPoint + LedWidth/2 + j * 3;
+                            } else{
+                                Inf.ptLed[j] = Inf.ptLed[j - 1] + (Inf.length ) / (Inf.led - 1);
+                            }
+                            break;
+
+                        case 4:
+                        if(j < 1){
+                            Inf.ptLed[j] = Inf.startPoint + LedWidth/2 + j * 3;
+                        } else{
+                            Inf.ptLed[j] = Inf.ptLed[j - 1] + (Inf.length ) / (Inf.led - 1);
+                        }
+                            break;
+                        case 5:
+
+                        if(j < 1){
+                            Inf.ptLed[j] = Inf.startPoint + LedWidth/2 + j * 3;
+                        } else if(j > Inf.led - 4){
+                            Inf.ptLed[j] = Inf.ptLed[j - 1] + 3;
+                        }else{
+                            Inf.ptLed[j] = Inf.ptLed[j - 1] + (Inf.length - 4*3) / (Inf.led - 4);
+                        }
+                            break;
+
+                        case 6:
+                        if(j < 4){
+                            Inf.ptLed[j] = Inf.startPoint + LedWidth/2 + j * 3;
+                        } else{
+                            Inf.ptLed[j] = Inf.ptLed[j - 1] + (Inf.length - 3*4 - LedWidth/2) / (Inf.led - 4);
+                        }
+                            break;
+
+                        case 7:
+                        if(j < 1){
+                            Inf.ptLed[j] = Inf.startPoint + LedWidth/2 + j * 3;
+                        } else if(j > Inf.led - 4){
+                            Inf.ptLed[j] = Inf.ptLed[j - 1] + 3;
+                        }else{
+                            Inf.ptLed[j] = Inf.ptLed[j - 1] + (Inf.length -  LedWidth/2 - 3*4) / (Inf.led - 4);
+                        }
+                            break;
+                        default:
+                            continue;
+
+                    }
+                    
+                    // 汇总
+                    InfPoint.push(Inf.ptLed[j]);
+
+                    // 三个控制区域信息
+                    if(i < 2){
+                            // 左副板位置信息
+                            area_l.piont.push(Inf.ptLed[j]);
+                            area_l.led ++;
+                    }else if(i > (InfPCBA.length - 3)){
+                            // 右副板位置信息
+                            area_r.piont.push(Inf.ptLed[j]);
+                            area_r.led ++;
+                    }else{
+                            // 中间板位置信息
+                            area_c.piont.push(Inf.ptLed[j]);
+                            area_c.led ++;
+                    }
+                    // 绘制发射灯
+                    var TxLed = document.createElementNS(svgns,'circle');
+                    if(i % 2 ){
+                        TxLed.setAttribute('style', 'r:1.5; fill:red; stroke:red; stroke-width:0');
+                    }else{
+                        TxLed.setAttribute('style', 'r:1.5; fill:blue; stroke:red; stroke-width:0');
+                    }                   
+                    TxLed.setAttribute('ID', 'TxBoard' + i + j);
+                    TxLed.style.cx = Inf.ptLed[j] + pointPhy.bottomX1;
+                    TxLed.style.cy = pointPhy.bottomY1;
+                    mLand.appendChild(TxLed);
+                    // 绘制发射灯名字
+                    var NameTx = document.createElementNS(svgns,'text');
+                    NameTx.setAttribute('style', 'fill: white; font-size:1px');
+                    NameTx.setAttribute('x', Inf.ptLed[j] + offsetX - 1);
+                    NameTx.setAttribute('y', pointPhy.bottomY1 + 0.5);
+                    NameTx.textContent='T' + i + j;
+                    mLand.appendChild(NameTx);
+                    // 绘制接收灯
+                    var RxLed = document.createElementNS(svgns,'circle');
+                    if(i % 2){
+                        RxLed.setAttribute('style', 'r:1.5; fill:red; stroke:red; stroke-width:0');
+                    }else{
+                        RxLed.setAttribute('style', 'r:1.5; fill:blue; stroke:red; stroke-width:0');
+                    }                   
+                    RxLed.style.cx = Inf.ptLed[j] + pointPhy.bottomX1;
+                    RxLed.style.cy = pointPhy.topY1;
+                    mLand.appendChild(RxLed);
+                    // 绘制接收灯名字
+                    var NameRx = document.createElementNS(svgns,'text');
+                    NameRx.setAttribute('style', 'fill: white; font-size:1px');
+                    NameRx.setAttribute('x', Inf.ptLed[j] + offsetX - 1);
+                    NameRx.setAttribute('y', pointPhy.topY1 + 0.5);
+                    NameRx.textContent='R' + i + j;
+                    mLand.appendChild(NameRx);
+                    
+                    Inf.viewLed = TxLed;
+                }
+            }   
+
+            // 测试点信息
+            var pens = {
+                pen: new Array,
+                inf: new Array,
+            }
+
+            var pen ;
+            // 绘制笔
+            var pen = document.createElementNS(svgns,'circle');
+            pen.setAttribute('position', 'relative');
+            pen.setAttribute('style', 'r:10; fill:black; stroke:red; stroke-width:0;');
+            // pen.setAttribute('z-index', '2');
+                 
+            pen.setAttribute('id', 'pen');
+            
+            // pen.setAttribute('z-index', 10);
+            pen.style.cx = mLand.scrollWidth / 2;
+            pen.style.cy = mLand.scrollHeight / 2;
+            // pen.style.= 2;
+            mLand.appendChild(pen);
+
+            pens.pen.push(pen);
+
+            pen.focus();
+
+
+            function DocMymousemove(event){
+
+                console.log('DocMymousemove');
+
+            }
+
+            function MyPenMousedown(event){
+                console.log('MyPenMousedown');
+
+                
+
+            }
+
+            // pen.addEventListener('mousedown', MyPenMousedown, false);
+            
+            pen.onmousedown = function(event){
+
+                var obj = document.getElementById('Msvg');    
+                var zoomView = obj.style.zoom;
+                var len = zoomView.indexOf('%');
+                // var len = event.view.ViewZoom.indexOf('%');
+                var zm = Number(zoomView.slice(0, len ));
+
+                var mX = 0;
+                var mY = 0;
+                var mX = event.offsetX / (zm / 100);
+                var mY = event.offsetY / (zm / 100);
+
+
+                // document.addEventListener('mousemove', DocMymousemove, false);
+
+                document.onmousemove = function(event){
+                    event = event || window.event;
+
+                    var mX = event.offsetX / (zm / 100);
+                    var mY = event.offsetY / (zm / 100);
+
+                    pen.style.cx = mX;
+                    pen.style.cy = mY;
+
+                }
+
+                document.onmouseup = function(event){
+
+                    document.onmousemove = null;
+                    document.onmouseup = null;
+
+                }
+
+            }
+
+
+
+            // mLand.onclick = function(event){
+
+            //     event = event || window.event;
+            //     // var obj = document.getElementById(event.currentTarget.id);
+
+            //     // console(event.target.clientWidth);
+            //     var zoomView = event.target.style.zoom;
+            //     var len = zoomView.indexOf('%');
+            //     // var len = event.view.ViewZoom.indexOf('%');
+
+            //     var zm = Number(zoomView.slice(0, len ));
+
+            //     var mX = event.offsetX / (zm / 100);
+            //     var mY = event.offsetY / (zm / 100);
+
+            //     pen.style.cx = mX;
+            //     pen.style.cy = mY;
+
+            // }
+
+            // 绘制光网
+            for(var i = 0; i < InfArea.length; i ++){
+                var points = InfArea[i].piont;
+                var lines = InfArea[i].line;
+                var colorVal = 0x00;
+                var strColor = '';
+                for(var j = 0; j < points.length; j ++){
+                    colorVal = 0x20 + j *1;
+
+                    var penInf = pens.pen[0];
+
+                    var deltalX = Math.abs(penInf.style.cx - points[j]);
+                    var deltalY = Math.abs(penInf.style.cy - phyLedCenterDis);
+                    var refArc = Math.atan2(deltalY, deltalX);
+                    var refAngle = 90 - (refArc * 180 / Math.PI);
+
+                    for(var k = 0; k < points.length; k ++){
+                        var deltal = Math.abs(points[j] - points[k]);
+                        var arc = Math.atan2(phyLedCenterDis, deltal);
+                        var angle = 90 - (arc * 180 / Math.PI);
+
+                        if(angle < 20){
+                        // if(((Math.abs(refAngle - angle)) < 1) ){
+
+                            var line = document.createElementNS(svgns,'line');
+                            line.setAttribute('style', 'stroke:red; stroke-width:0.3; stroke-opacity:0.2'); 
+                            // if(1)line.setAttribute('style', 'stroke:red; stroke-width:0.2'); 
+                            line.setAttribute('x1', points[j] + offsetX);
+                            line.setAttribute('y1', pointPhy.bottomY1);
+                            line.setAttribute('x2', points[k] + offsetX);
+                            line.setAttribute('y2', pointPhy.topY1);
+                            mLand.appendChild(line);
+
+                            var InfPen = pens.pen[0];
+                            lines.push(line);
+                            
+
+                        }
+                    }
+
+                }
+
+            }
+            mLand.appendChild(InfPen);
+            var InfText = document.getElementById('InfText');
+            var str = InfText.textContent;
+            InfText.textContent =  'left area:' + InfArea[0].line.length + ' ' + 'center area:' +InfArea[1].line.length + ' ' + 'right area:' +InfArea[2].line.length+ '' ;
+
+        }
+ 
+    
+    </script>
 
 
 
 
 </head>
-<body>
-    <link rel="stylesheet" href="myStyle.css">
-    <p>this a </p>
-    <div id="box1">
-        <svg></svg>
-    </div>
+<body >
+    <link rel="stylesheet" type="text/css" href="style.css">
     
+    <div id = 'Mdiv'>
+        <svg id="Msvg"
+        version="1.1"
+        baseProfile="full"
+        xmlns="http://www.w3.org/2000/svg">
+        <circle cx = '100px' cy = '100px' r = '100' opacity="0.3">ewrew</circle>
+        <!-- <div > </div> -->
+        <!-- <button> </button> -->
+        </svg>
+
+
+    </div>
+
+    <div >
+        <!-- <button></button> -->
+        <!-- <button></button> -->
+        <!-- <input id = 'zoom' type="number" value="100"  onkeydown="zKeydown()"> -->
+        <text id = 'InfText'></text>
+    </div>
+
 </body>
 </html>
