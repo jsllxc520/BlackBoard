@@ -1,4 +1,49 @@
-*{
-    margin: 0;
+body{
+    background-color: rgb(255, 255, 255);
+    /* background-image: url("./img/icon.jpg"); */
+    /* overflow: scroll; */
 
+}
+
+*{
+
+    margin: 0px;
+    /* overflow: auto; */
+}
+
+
+
+#Msvg{
+
+    /* position: ; */
+    /* top: auto; */
+    /* left: auto; */
+    /* bottom: auto; */
+    /* right: auto; */
+    width: 4150px;
+    height: 1250px;
+    background-color: rgb(153, 215, 218);
+    position: sticky;
+    z-index: 10;
+    /* float: left; */
+    /* background-image: url(./img/icon.jpg); */
+    /* background-repeat: no-repeat; */
+    position:relative;
+    /* overflow: scroll; */
+    /* zoom: 70%; */
+    margin: auto;
+
+}
+
+#Mdiv{
+    position:absolute;
+    overflow: auto;
+    /* width: ; */
+    /* float:inline-end; */
+    /* overflow: auto; */
+    /* width: 8192; */
+    /* height: 8192; */
+    /* height: 8192; */
+    /* zoom: 70%; */
+    margin: auto;
 }

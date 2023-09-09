@@ -4,67 +4,30 @@
 
 <head>
     <meta charset="utf-8">
-    <title>iWhiteboard</title>
+    <title>module</title>
 
-    <script type="text/javascript"  src="event.js" ></script>
-
+    <script type="text/javascript"  src="VarDef.js" ></script>
+    <script type="text/javascript"  src="comfunction.js" ></script>
+    <script></script>
+    <!-- <link rel="stylesheet" href=""> -->
     <script>
 
-        var mLand; 
-        var ViewZoom = 100;
 
-        // mLand.addEventListener("keydown", svgKeydow(event));
 
-        // function svgKeydow(event){
-
-        //     var zoom = document.getElementById('zoom');
-        //     zoom.value = event.keycode;
-        //     document.write(event.keycode);
-
-        // } 
-
-        document.addEventListener('keydown', svgkeydown, false);
         
         document.onkeydown = function(event){
 
+            event =event || window.Event;
             var key = event.keyCode;
-            // var curZoom = mLand.style.zoom;
             var obj = document.getElementById('Msvg');
             var zoom = obj.style.zoom;
 
-            var len = obj.style.zoom.indexOf('%');
-
-            var zm = Number(obj.style.zoom.slice(0, len ));
-
-            var zmP = zm + zm / 15;
-            var zmM = zm - zm / 15;
-
-            // var ViewZoomCur = ViewZoom + "%"
-
-            switch (key){
-                case 90:
-                    // ViewZoom = ViewZoom + ViewZoom/10;
-                    mLand.style.zoom = String(zmP + "%");
-                    break;
-                case 88:
-                    // ViewZoom = ViewZoom - ViewZoom/10;
-                    mLand.style.zoom = String(zmM + "%");
-                    break;
-
-            }
+            obj.style.zoom = zoomTranslate(zoom, key);
         }
 
         window.onload = function(){
 
 
-            // Namespace constants
-            var svgns = "http://www.w3.org/2000/svg",
-                xlinkns = "http://www.w3.org/1999/xlink",
-                xmlns = "http://www.w3.org/XML/1998/namespace",
-                xmlnsns = "http://www.w3.org/2000/xmlns/", // see http://www.w3.org/TR/REC-xml-names/#xmlReserved
-                se_ns = "http://svg-edit.googlecode.com",
-                htmlns = "http://www.w3.org/1999/xhtml",
-                mathns = "http://www.w3.org/1998/Math/MathML";
 
             // 获取已确定的绘图对像
             mLand = document.getElementById('Msvg'); 
@@ -85,9 +48,6 @@
 
             var viewWidth = mLand.scrollWidth;      // 显示区域的长度
             var viewHeight = mLand.scrollHeight;    // 显示区域高度
-
-            // document.write(viewWidth);
-            // document.write(viewHeight);
 
             // 计算显示区域的坐标
             pointPhy.topX1 = (viewWidth -phyWidth)/2;
@@ -423,8 +383,6 @@
             function MyPenMousedown(event){
                 console.log('MyPenMousedown');
 
-                
-
             }
 
             // pen.addEventListener('mousedown', MyPenMousedown, false);
@@ -437,8 +395,6 @@
                 // var len = event.view.ViewZoom.indexOf('%');
                 var zm = Number(zoomView.slice(0, len ));
 
-                var mX = 0;
-                var mY = 0;
                 var mX = event.offsetX / (zm / 100);
                 var mY = event.offsetY / (zm / 100);
 
@@ -545,7 +501,7 @@
 
 </head>
 <body >
-    <link rel="stylesheet" type="text/css" href="style.css">
+    <link rel="stylesheet" type="text/css" href="myStyle.css">
     
     <div id = 'Mdiv'>
         <svg id="Msvg"

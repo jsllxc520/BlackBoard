@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <link rel="text/javascript" href="VarDef.js">
+
+    <script>
+
+        window.onload = function(){
+
+            var obj = document.getElementById('box1');
+            // var obj = document.getElementsByClassName('box');
+            
+            console.log(obj);
+            // obj.focus();
+
+            // obj.addEventListener
+            // obj.addEventListener('keydown', function(event){
+
+            //     console.log(event.keyCode);
+            // }, true);
+
+            obj.onmousedown = function(event){
+
+                event = event || window.Event;
+                console.log(event.pageX);
+            }
+
+            InfInit();
+
+            var CanvasL = document.getElementById('AreaL');
+            var CanvasC = document.getElementById('AreaC');
+            var CanvasR = document.getElementById('AreaR');
+
+            for(var i = 0; i < InfArea.lengt; i ++)
+            {
+                var  Area = InfArea[i];
+                for(var j = 0; j < Area.lengt; j ++)
+                {
+                    var line = document.createElementNS(svgns, 'line');
+
+                    line.setAttribute('style', 'stroke:black; stroke-width:1'); 
+
+
+                }
+
+            }
+
+
+        }
+
+
+    </script>
+
+
+</head>
+<body>
+    <link rel="stylesheet" href="secStyle.css">
+
+    <div class="box">
+        <!-- <div id="box1"></div> -->
+        <!-- <svg id="box1"></svg> -->
+        <div id="box1">
+            <!-- <svg id="MySvg"></svg> -->
+            <!-- <div style="display: inline; background-color:deeppink;"></div>
+            <div style="display: inline; background-color: chartreuse;"></div>
+            <div style="display: inline; background-color: black;"></div> -->
+            <div id="span1">
+                <svg id="AreaL"></svg>
+            </div>
+            <div id="span2">
+                <svg id="AreaC"></svg>
+            </div>
+            <div id="span3">
+                <svg id="AreaR"></svg>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
