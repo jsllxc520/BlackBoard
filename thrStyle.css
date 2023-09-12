@@ -1,0 +1,188 @@
+*{
+    margin: 0px;
+    padding: 0px;
+    border: 0px;
+    overflow: auto;
+}
+/* html body{
+    overflow: hidden;
+} */
+.total{
+
+    background: #bfa;
+    min-width: 100%;
+    min-height: 100%;
+    position: absolute;
+}
+
+.head{
+    height: 100px;
+    background-color: rgb(23, 160, 105);
+    position: relative;
+}
+
+.main{
+    /* padding-top: 10px; */
+    height: 480px;
+    min-height: 480px;
+    background-color: rgb(239, 245, 243);
+    position: relative;
+    /* overflow:auto; */
+    /* transform: scale(0.3); */
+
+}
+
+
+.pst{
+    
+    /* padding: 2px; */
+    width: 4110px;
+    height: auto;
+    background-color: white;
+    position: relative;
+    /* zoom: 30%; */
+    /* transform: scale(0.3); */
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 25px;
+    /* margin-bottom: auto; */
+    padding-left: 6px;
+    /* overflow: auto; */
+    /* overflow: hidden; */
+
+
+}
+
+
+
+.LCR{
+    height: 1193px;
+    float: left;
+    position: relative;
+    /* overflow: auto; */
+    border: 1px dashed black;
+
+}
+
+.left{
+    width: 1049px;
+    background-color: white;
+}
+
+.center{
+    width: 1978.5px;
+    background-color: white;
+    margin: auto 11.2px;
+}
+.right{
+    width: 1049px;
+    background-color: white;
+}
+
+
+.area{
+    height: 1193px;
+}
+
+#CanvasLeft{
+    width: 1049px;
+    background-color: white;
+    /* zoom: 30; */
+}
+#CanvasCenter{
+    width: 1978.5px;
+    background-color: white;
+    /* zoom: 40; */
+    /* position:relative; */
+    /* overflow: auto; */
+}
+#CanvasRight{
+    width: 1049px;
+    background-color: white;
+    /* zoom: 60; */
+}
+
+.InNunber{
+    margin: 10px;
+    /* stroke: red; */
+    width: 100px;
+    text-align: center;
+    font-size: 20px;
+    color: red;
+    /* border-style: dashed; */
+}
+
+.InRange{
+    
+    margin: 10px;
+    width: 200px;
+    height: 10px;
+    /* background-color: rebeccapurple; */
+    /* color: #bfa; */
+    /* stroke: red; */
+}
+
+#ZoomValueCenter{
+    margin-left: 880px;
+}
+#ZoomCenter{
+    margin-right: 1800px;
+}
+
+.InputNumberArea{
+    /* height: 2px; */
+    font-size: 20px;
+    color: black;
+    width: 60px;
+    text-align: center;
+    margin-bottom: 2px;
+    margin: 0;
+    border: 1px solid rgb(21, 195, 82);
+    /* box-sizing: border-box; */
+    /* box-shadow: 2px 2px 20px rgb(9, 182, 121) ; */
+    border-radius: 10px;
+
+}
+
+.InputRangeArea{
+   
+    margin: 10px;
+    width: 100px;
+    /* box-shadow: 2px 2px 20px rgb(9, 182, 121) ; */
+    /* height: 1px; */
+    /* zoom:2; */
+
+}
+
+#ZoomInput{
+
+    /* margin: 0px; */
+    margin-bottom: 10px;
+    padding: 10px;
+    /* height: 10px; */
+    width: auto;
+    /* position: relative; */
+    /* align-content: center; */
+
+    /* background-color: rgb(22, 145, 201); */
+    
+}
+
+
+
+
+
+
+
+
+
+
+
+.foot{
+    height: 100px;
+    background-color: rgb(132, 30, 204);
+    position: relative;
+    border: 0px;
+    /* padding-bottom: 10px; */
+    /* top: 100px; */
+}

@@ -6,6 +6,8 @@
     <title>Document</title>
 
     <link rel="text/javascript" href="VarDef.js">
+    <link rel="text/javascript" href="comfunction.js">
+    <script type="text/javascript" src="comfunction.js"></script>
 
     <script>
 
@@ -13,6 +15,8 @@
 
             var obj = document.getElementById('box1');
             // var obj = document.getElementsByClassName('box');
+
+            // obj.getAttribute('width');
             
             console.log(obj);
             // obj.focus();
@@ -23,17 +27,25 @@
             //     console.log(event.keyCode);
             // }, true);
 
-            obj.onmousedown = function(event){
+            // obj.onmousedown = function(event){
 
-                event = event || window.Event;
-                console.log(event.pageX);
-            }
+            //     event = event || window.Event;
+            //     console.log(event.pageX);
+            // }
 
-            InfInit();
+            // InfInit();
+
+            var MyCanas = new Array;
 
             var CanvasL = document.getElementById('AreaL');
             var CanvasC = document.getElementById('AreaC');
             var CanvasR = document.getElementById('AreaR');
+
+            MyCanas.push(CanvasL);
+            MyCanas.push(CanvasC);
+            MyCanas.push(CanvasR);
+
+            InfInit(MyCanas);
 
             for(var i = 0; i < InfArea.lengt; i ++)
             {
@@ -43,6 +55,10 @@
                     var line = document.createElementNS(svgns, 'line');
 
                     line.setAttribute('style', 'stroke:black; stroke-width:1'); 
+                    line.setAttribute('x1', Inf.startPoint + offsetX);
+                    line.setAttribute('y1', pointPhy.bottomY1 - 8);
+                    line.setAttribute('x2', Inf.startPoint + Inf.length + offsetX);
+                    line.setAttribute('y2', pointPhy.bottomY2 - 8);
 
 
                 }
@@ -60,25 +76,24 @@
 <body>
     <link rel="stylesheet" href="secStyle.css">
 
-    <div class="box">
-        <!-- <div id="box1"></div> -->
-        <!-- <svg id="box1"></svg> -->
-        <div id="box1">
-            <!-- <svg id="MySvg"></svg> -->
-            <!-- <div style="display: inline; background-color:deeppink;"></div>
-            <div style="display: inline; background-color: chartreuse;"></div>
-            <div style="display: inline; background-color: black;"></div> -->
-            <div id="span1">
-                <svg id="AreaL"></svg>
-            </div>
-            <div id="span2">
-                <svg id="AreaC"></svg>
-            </div>
-            <div id="span3">
-                <svg id="AreaR"></svg>
-            </div>
-        </div>
-    </div>
+
+
+    <header>
+
+    </header>
+
+    <main>
+        <div class="left"> area_Left</div>
+        <div class="center">arec_Center</div>
+        <div class="right">arec_Right</div>
+
+
+    </main>
+
+    <footer>
+
+
+    </footer>
 
 </body>
 </html>

@@ -1,6 +1,8 @@
-/* *{
+*{
     margin: 0;
-} */
+    padding: 0;
+    overflow: hidden;
+}
 
 
 #box1{
@@ -8,16 +10,24 @@
     /* margin: auto; */
     /* pa */
     /* padding: 20px; */
-    background-color: white;
+    width: auto;
+    height: auto;
+    background-color: rgb(137, 215, 20);
     /* width: 4500px; */
     /* height: 1200px; */
     /* padding: 50%; */
-    position: relative;
+    /* position: relative; */
     /* z-index: 30; */
     /* overflow: auto; */
-    /* zoom: 20%; */
+    /* zoom: 40%; */
     margin: auto;
+    /* float: left; */
+    /* width: 100%; */
+    /* display: inline-block; */
+    
     /* border: 2px dashed black; */
+
+
     
 
 }
@@ -26,16 +36,17 @@
 
     /* color: rgb(8, 101, 8); */
     padding: 50px;
-    position: absolute;
-    overflow: auto;
+    /* position: relative; */
+    /* overflow: auto; */
     /* margin: 0px; */
     /* width:auto; */
     /* height: auto; */
-    background-color: whitesmoke;
+    background-color: rgb(12, 10, 10);
     border: 2px solid black;
+    /* float: left; */
     
 
-    zoom: 30%;
+    /* zoom: 40%; */
 }
 
 /* #MySvg{
@@ -54,45 +65,165 @@
 
 } */
 
-span{
+/* span{
 
     width: 400px;
     height: 200px;
 
-}
+} */
 
 #span1{
 
-    background-color: white;
-    display: inline-block;
+    background-color: rgb(62, 182, 82);
+    /* display: inline-block; */
     width: 1049px;
     height: 1193px;
     border: 2px dashed black ;
+    /* offset-block-end: 0%; */
+    float: left;
+    /* position: absolute; */
+    /* margin: auto; */
+    /* left: 0; */
 }
 
 #span2{
 
-    background-color: white;
-    display: inline-block;
+    background-color: rgb(215, 25, 25);
+    /* display: inline; */
     width: 1978.5px;
     height: 1193px;
     margin-left: 11.2px;
+    /* offset-block-end: 20px; */
     border: 2px dashed black;
+    float: right;
+    /* position: relative; */
+    margin: 10%;
 }
 
 #span3{
 
     margin-left: 11.2px;
-    background-color: white;
-    display: inline-block;
+    background-color: rgb(197, 65, 65);
+    /* display: inline; */
     width: 1049px;
     height: 1193px;
     border: 2px dashed black;
+    float: left;
+    /* position: absolute; */
+    margin: auto;
 }
 
 svg{
 
     width: 100%;
     height: 100%;
+    /* background-color: rgb(226, 143, 143); */
+    /* display: inline; */
+    /* position: static; */
+    /* overflow: auto; */
+}
+
+.EnZoom{
+
+    zoom: 30%;
+}
+
+#AreaL{
     background-color: red;
 }
+#AreaC{
+    background-color: green;
+}
+#AreaR{
+    background-color: blue;
+}
+
+header, main, footer{
+    /* width: 4500px; */
+    width: 4118.9px;
+    /* height: 100%; */
+    /* width: 100%; */
+    margin: auto;
+    /* overflow: auto; */
+    position: relative;
+    padding-left: 20px;
+}
+
+header{
+    /* width: 4500px; */
+    height: 100px;
+    background-color: brown;
+}
+
+main{
+    /* width: 100%; */
+    /* width: 4118.9px; */
+    height: 1207px;
+    background-color: white;
+    margin: 10px auto;
+    /* zoom: 100%; */
+    overflow:visible;
+    position: static;
+    /* padding: 20px; */
+    /* padding-right: 30px; */
+    /* padding: 10px; */
+    padding-top: 14px;
+    padding-left: 20px;
+    border: 2px dashed black;
+    
+    
+
+}
+
+footer{
+    /* width: 4500x; */
+    height: 100px;
+    background-color: orange;
+
+}
+
+
+div{
+    height: 1193px;
+    /* margin: 11.2px 40px; */
+
+    font-size: 100px;
+}
+
+.left{
+    /* display: inline; */
+    width: 1049px;
+    background-color: red;
+    /* margin-left: 11.2px; */
+    position: absolute;
+    /* zoom: 200%; */
+    /* overflow: auto; */
+    overflow:scroll;
+}
+.center{
+    /* display: inline; */
+    width: 1978.5px;
+    background-color: green;
+    /* margin: auto 11.2px; */
+    position: absolute;
+    left: 1080.2px;
+    /* top: -1193px; */
+
+}
+.right{
+    /* display: inline; */
+    /* float: right; */
+    width: 1049px;
+    background-color: blue;
+    position: absolute;
+    /* margin: 11.2px 11.2px; */
+    left: 3069.9px;
+    /* right: 40px; */
+    /* margin-left: 11.2px; */
+    /* top: -1193px; */
+}
+
+/* body{
+
+    overflow: visible;
+} */

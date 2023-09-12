@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <script type="text/javascript" src="comfunction.js"></script>
+
+
+    <script>
+        var points = new Array;
+        // var 
+        window.onload = function(){
+
+            var SvgLeft = document.getElementById('CanvasLeft');
+            var SvgCenter = document.getElementById('CanvasCenter');
+            var SvgRight = document.getElementById('CanvasRight');
+
+            var MyCanas = new Array;
+
+            MyCanas.push(SvgLeft);
+            MyCanas.push(SvgCenter);
+            MyCanas.push(SvgRight);
+
+            var AllZoom = document.getElementById('AllZoomDiv');
+
+            AllZoom.style.zoom = CurZoom;
+
+            // var tem = SvgLeft.getAttributeNS(svgns, 'style');
+            // console.log(tem);
+
+            SvgCenter.onmousedown = function(event){
+
+                // console.log('x:' +event.offsetX + '  y:'+event.offsetY)
+                // console.log(event.target.width);
+
+                // console.log(window.pageXOffset);
+            }
+
+            InfInit(MyCanas);
+
+            
+            var ptCnt = 30;
+
+            for(var i = 0; i < ptCnt; i ++){
+
+                var point =document.createElementNS(svgns, 'circle');
+                point.setAttribute('id', 'PT' + i);
+                // point.setAttribute('r', 10);
+                point.setAttribute('style', 'r:40; fill:red; stroke:red; stroke-width:0;');
+                var x = Math.random() * 1000;
+                var y = Math.random() * 1000;
+                point.style.cx = x;
+                point.style.cy = y;
+
+                if((i % 3) == 0)SvgLeft.appendChild(point);
+                if((i % 3) == 1)SvgCenter.appendChild(point);
+                if((i % 3) == 2)SvgRight.appendChild(point);
+
+                points.push(point);
+
+                points[i].addEventListener('mousedown', PenOnmousedown, false);
+            }
+
+        }
+
+        function PenOnmousedown(event){
+            var obj = event.target;
+            var parObj = obj.parentNode;
+
+            var allZmObj = document.getElementById('AllZoomDiv');
+            var allZm = allZmObj.style.zoom;
+
+            // console.log(obj);
+            // console.log(allobj.style.zoom);
+
+            var szoom = parObj.style.zoom;
+
+                
+            // console.log(szoom);
+
+            parObj.onmousemove = function(event){
+
+                if(!szoom){
+                    szoom = 1;
+
+                }
+                if(!allZm)
+                {
+                    allZm = CurZoom;
+                }
+                var x = event.offsetX / (allZm) / szoom;
+                var y = event.offsetY / (allZm) / szoom;
+
+
+
+                // var x = e.pageX;
+                // var y = e.pageY;
+                // var x = e.clientX / CurZoom;
+                // var y = e.clientY / CurZoom;
+                // console.log(obj);
+
+                // obj.style.cx = x + 'px';
+                // obj.style.cy = y + 'px';
+                obj.style.cx = x;
+                obj.style.cy = y;
+                // console.log('e.clientX:' + e.clientX +' e.pageX:'+e.pageX);
+                // console.log('e.pageX:' + event.pageX +' e.pageY:'+event.pageY);
+                // console.log(obj);
+
+            }
+            parObj.onmouseup = function(event){
+                parObj.onmousemove = null;
+                parObj.onmouseup = null;
+            }
+
+        }
+
+
+        // 全区域range
+        function AllRang(){
+
+            var src = document.getElementById('ZoomAll');
+            var target = document.getElementById('ZoomValue');
+            var view = document.getElementById('AllZoomDiv');           
+            var zoomVal = target.value = src.value;
+
+            view.style.zoom = zoomVal;
+
+
+            CurZoom = zoomVal;
+
+            console.log(CurZoom + ' : '+zoomVal)
+        }
+        //左侧区域Range
+        function ZoomRangLeft(){
+
+            var src = document.getElementById('ZoomLeft');
+            var target = document.getElementById('ZoomValueLeft');
+            var view = document.getElementById('CanvasLeft');           
+            var zoomVal = target.value = src.value;
+
+            view.style.zoom = zoomVal;
+        }
+
+        //中间区域Range
+        function ZoomRangCenter(){
+
+            var src = document.getElementById('ZoomCenter');
+            var target = document.getElementById('ZoomValueCenter');
+            var view = document.getElementById('CanvasCenter');           
+            var zoomVal = target.value = src.value;
+
+            view.style.zoom = zoomVal;
+        }
+
+        //右侧区域Range
+        function ZoomRangRight(){
+
+            var src = document.getElementById('ZoomRight');
+            var target = document.getElementById('ZoomValueRight');
+            var view = document.getElementById('CanvasRight');           
+            var zoomVal = target.value = src.value;
+
+            view.style.zoom = zoomVal;
+        }
+
+
+    </script>
+</head>
+<body>
+    <link rel="stylesheet" href="thrStyle.css">
+
+    <div class="total">
+        <div class="head">head</div>
+        <div>
+            <input type="number" id="ZoomValue" class="InNunber" value="0.3" min="0.1" max="50" step="0.01" oninput="ZoomValue()">
+            <input type="range" id="ZoomAll" class="InRange" value = "0.3" min="0.3" max="50" step="0.01" oninput="AllRang()">
+        </div>
+        <div class="main">
+
+            <div id="AllZoomDiv" class="pst">
+                <div id="ZoomInput">
+                    <!-- <input type="number" name="a" id=""> -->
+                    <input type="number" id="ZoomValueLeft" class="InputNumberArea" value="1" min="1" max="50" step="0.01" oninput="ZoomValueLeft()">
+                    <input type="range" id="ZoomLeft" class="InputRangeArea" value = "1" min="1" max="50" step="0.01" oninput="ZoomRangLeft()">
+
+                    <input type="number" id="ZoomValueCenter" class="InputNumberArea" value="1" min="1" max="50" step="0.01" oninput="ZoomValueCenter()">
+                    <input type="range" id="ZoomCenter" class="InputRangeArea" value = "1" min="1" max="50" step="0.01" oninput="ZoomRangCenter()">
+
+                    <input type="number" id="ZoomValueRight" class="InputNumberArea" value="1" min="1" max="50" step="0.01" oninput="ZoomValueRight()">
+                    <input type="range" id="ZoomRight" class="InputRangeArea" value = "1" min="1" max="50" step="0.01" oninput="ZoomRangRight()">
+                </div>
+
+
+                <div class="left LCR">
+                    <svg id="CanvasLeft" class="area">
+                        
+                    </svg>
+                </div>
+                <div class="center LCR" class="LCR">
+
+                    <svg id="CanvasCenter" class="area" xmlns="http://www.w3.org/2000/svg" version="1.1" >
+
+                        <!-- <ellipse cx="210" cy="45" rx="170" ry="15" style="fill:yellow"/> -->
+
+
+                    </svg>
+                </div>
+                <div class="right LCR">
+                    <svg id="CanvasRight" class="area">                      
+                    </svg>
+                </div>
+            </div>
+            <!-- <button style="height: 100px; width: 100px; fill:  red;"></button> -->
+            
+        </div>
+        <div class="foot">foot</div>
+
+    </div>
+
+</body>
+</html>
